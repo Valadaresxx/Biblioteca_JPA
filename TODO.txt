@@ -1,0 +1,87 @@
+Projeto: Sistema de biblioteca com JPA puro
+Autor: Gabriel Valadares da Silva (Vala)
+
+Objetivo:
+Sistema de controle de empréstimos de livros com cadastro de usuários, livros e registros de empréstimos,
+utilizando Java + JPA/Hibernate + MySQL.
+
+====================
+📘 CRUD LIVRO
+====================
+
+INSERT:
+- Cadastrar livro com título, autor, ISBN e estoque (FEITO)
+
+SELECT:
+- Buscar por ID (FEITO)
+- Listar todos os livros (FEITO)
+- Buscar por nome (LIKE) (FEITO)
+- Buscar por autor (LIKE) (FEITO)
+- Buscar livros sem empréstimos (FEITO)
+- Buscar livros com estoque disponível
+- Buscar livros mais emprestados
+
+UPDATE:
+- Atualizar informações do livro (título, autor, estoque)
+- Atualizar quantidade de estoque (diminuir ou aumentar)
+
+DELETE:
+- Remover livro do sistema por ID
+- Remover todos os livros (em caso de reset)
+
+====================
+👤 CRUD USUÁRIO
+====================
+
+INSERT:
+- Cadastrar usuário com nome, email e telefone (FEITO)
+
+SELECT:
+- Buscar por ID
+- Listar todos os usuários
+- Buscar por nome (LIKE)
+- Buscar usuários com empréstimos ativos
+
+UPDATE:
+- Atualizar informações de contato (nome, email, telefone)
+
+DELETE:
+- Remover usuário por ID
+- Verificar se possui empréstimos antes da exclusão
+
+========================
+📦 CRUD EMPRÉSTIMO
+========================
+
+INSERT:
+- Criar empréstimo vinculando livro e usuário (FEITO)
+- Definir data de empréstimo e data prevista de devolução (FEITO)
+- Verificar se livro está disponível em estoque antes do empréstimo (FEITO)
+
+SELECT:
+- Buscar todos os empréstimos (FEITO)
+- Buscar empréstimos por ID (FEITO)
+- Buscar empréstimos por ID do usuário (FEITO)
+- Buscar empréstimos por ID do livro (FEITO)
+- Listar empréstimos ativos (não devolvidos)
+- Listar empréstimos vencidos (data prevista anterior à data atual)
+
+UPDATE:
+- Marcar devolução e registrar data real
+- Atualizar status do empréstimo (ativo/concluído)
+- Atualizar livro e usuário vinculados (caso necessário)
+
+DELETE:
+- Remover empréstimo por ID (FEITO)
+- Remover todos os empréstimos de um usuário (admin) (FEITO)
+
+====================
+📊 RELATÓRIOS/EXTRAS
+====================
+
+- Quantidade de empréstimos por usuário
+- Relatório de livros mais emprestados
+- Relatório de usuários com mais empréstimos ativos
+- Consultar disponibilidade atual de um livro
+- Histórico de empréstimos por usuário
+- Lista de livros atualmente emprestados
