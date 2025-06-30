@@ -16,13 +16,18 @@ public class Emprestimo {
     private Livro livro;
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
+
     public Emprestimo() {
+        this.dataEmprestimo = LocalDate.now();
+        this.dataDevolucaoPrevista = this.dataEmprestimo.plusDays(14);
     }
 
-    public Emprestimo(LocalDate dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
-//        this.dataDevolucaoPrevista = this.dataEmprestimo + ;
-//        this.dataDevolucaoReal = dataDevolucaoReal;
+    public Emprestimo(Livro livro, Usuario usuario) {
+        this.usuario = usuario;
+        this.livro = livro;
+        this.dataEmprestimo = LocalDate.now();
+        this.dataDevolucaoPrevista = this.dataEmprestimo.plusDays(7);
+
     }
 
     public Long getId() {
