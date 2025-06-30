@@ -26,7 +26,8 @@ public class Emprestimo {
         this.usuario = usuario;
         this.livro = livro;
         this.dataEmprestimo = LocalDate.now();
-        this.dataDevolucaoPrevista = this.dataEmprestimo.plusDays(7);
+        this.dataDevolucaoPrevista = this.dataEmprestimo.plusDays(14);
+//        this.livro = livro.setEstoque(livro.getEstoque() - 1);
 
     }
 
@@ -44,5 +45,25 @@ public class Emprestimo {
 
     public LocalDate getDataDevolucaoReal() {
         return dataDevolucaoReal;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    @Override
+    public String toString() {
+        return "Emprestimo{" +
+                "id=" + id +
+                ", dataEmprestimo=" + dataEmprestimo +
+                ", dataDevolucaoPrevista=" + dataDevolucaoPrevista +
+                ", dataDevolucaoReal=" + dataDevolucaoReal +
+                ", livro=" + livro +
+                ", usuario=" + usuario +
+                '}';
     }
 }

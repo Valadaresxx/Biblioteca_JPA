@@ -10,34 +10,49 @@ import br.com.valadares.biblioteca.util.JPAUtil;
 
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         EntityManager em = JPAUtil.getEntityManager();
-        Livro livro = new Livro("A chave da virada", "Marcelo nier",
+        Livro livro1 = new Livro("A chave da virada", "Marcelo nier",
                 "123123123", 10);
-        Usuario usuario = new Usuario("Gabriel", "email@gmail.com", "996965910");
-        Emprestimo emprestimo = new Emprestimo(livro, usuario);
+        Livro livro2 = new Livro("Holy bible", "Diversos",
+                "784245473", 15);
+        Livro livro3 = new Livro("Dragon ball Super - 10 ", "Akira toriyama",
+                "954874513", 3);
+
+        Usuario usuario1 = new Usuario("Gabriel", "email@gmail.com", "996965910");
+        Usuario usuario2 = new Usuario("cleber", "clebinho@gmail.com", "954876215");
+        Usuario usuario3 = new Usuario("Anitta", "anitta@gmail.com", "970706570");
 
         LivroDAO livroDAO = new LivroDAO(em);
         UsuarioDAO usuarioDAO = new UsuarioDAO(em);
         EmprestimoDAO emprestimoDAO = new EmprestimoDAO(em);
 
         em.getTransaction().begin();
+        livroDAO.cadastrar(livro1);
+        livroDAO.cadastrar(livro2);
+        livroDAO.cadastrar(livro3);
+        usuarioDAO.cadastrar(usuario1);
+        usuarioDAO.cadastrar(usuario2);
+        usuarioDAO.cadastrar(usuario3);
 
-        livroDAO.cadastrar(livro);
-        livroDAO.buscarTodos();
-
-        usuarioDAO.cadastrar(usuario);
-        usuarioDAO.buscarUsuarios();
-
-        emprestimoDAO.cadastrar(emprestimo);
-        emprestimoDAO.buscarTodos();
-
-
+        emprestimoDAO.cadastrar(livro1, usuario1);
+        emprestimoDAO.cadastrar(livro3, usuario2);
+        emprestimoDAO.cadastrar(livro2, usuario3);
+        List<Emprestimo> todosEmprestimos = emprestimoDAO.buscarTodos();
+        List<Emprestimo> porUsuario = emprestimoDAO.verEmprestimoPorUsuario(2l);
 
         em.getTransaction().commit();
+        emprestimoDAO.deletarId(2l);
+        for (Emprestimo emprestimo : todosEmprestimos){
+            System.out.println("Todos os emprestimos: " + emprestimo);
+        }
+        for (Emprestimo emprestimo : porUsuario){
+            System.out.println("Emprestimo por usuario: " + emprestimo);
+        }
 
         em.close();
     }
-
 }

@@ -13,6 +13,7 @@ public class Livro {
     private String isbn;
     private int estoque;
 
+
     public Livro() {
     }
 
@@ -41,5 +42,20 @@ public class Livro {
 
     public int getEstoque() {
         return estoque;
+    }
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
+    }
+
+    @Override
+    public String toString() {
+        return "Livro{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", autor='" + autor + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", estoque=" + estoque +
+                '}';
     }
 }
