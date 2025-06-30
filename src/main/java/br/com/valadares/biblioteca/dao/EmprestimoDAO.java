@@ -49,10 +49,19 @@ public class EmprestimoDAO {
 
         em.remove(em.merge(emprestimo));
     }
-    public List<Emprestimo> verEmprestimoPorUsuario(Long idUsuario) {
-        String jpql = "SELECT p FROM Emprestimo p WHERE p.usuario.id = :idUsuario";
+    public List<Emprestimo> verEmprestimoPorIdUsuario(Long idUsuario) {
+        String jpql = "SELECT p FROM Emprestimo p WHERE p.usuario.id = :id";
         return em.createQuery(jpql, Emprestimo.class)
-                .setParameter("idUsuario", idUsuario)
+                .setParameter("id", idUsuario)
                 .getResultList();
+    }
+    public List<Emprestimo> verEmprestimoPorIdLivro(Long idLivro) {
+        String jpql = "SELECT p FROM Emprestimo p WHERE p.livro.id = :id";
+        return em.createQuery(jpql, Emprestimo.class)
+                .setParameter("id", idLivro)
+                .getResultList();
+    }
+    public Emprestimo buscarPorId(Long id) {
+        return em.find(Emprestimo.class, id);
     }
 }

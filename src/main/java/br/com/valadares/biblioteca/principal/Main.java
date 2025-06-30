@@ -35,7 +35,7 @@ public class Main {
 
 
         testeEmprestimo();
-        testeLivro();
+//        testeLivro();
         em.close();
     }
     public static void adicionarLivro() {
@@ -70,7 +70,7 @@ public class Main {
         Usuario usuario3 = usuarioDAO.buscarUsuarioId(3L);
 
         emprestimoDAO.cadastrar(livro1, usuario1);
-//        emprestimoDAO.cadastrar(livro3, usuario2);
+        emprestimoDAO.cadastrar(livro1, usuario2);
         emprestimoDAO.cadastrar(livro2, usuario3);
     }
 
@@ -89,13 +89,19 @@ public class Main {
     }
     public static void testeEmprestimo() {
         List<Emprestimo> todosEmprestimos = emprestimoDAO.buscarTodos();
-        List<Emprestimo> porUsuario = emprestimoDAO.verEmprestimoPorUsuario(2l);
-        emprestimoDAO.deletarId(2l);
-        for (Emprestimo emprestimo : todosEmprestimos){
-            System.out.println("Todos os emprestimos: " + emprestimo);
-        }
-        for (Emprestimo emprestimo : porUsuario){
-            System.out.println("Emprestimo por usuario: " + emprestimo);
+        List<Emprestimo> porUsuario = emprestimoDAO.verEmprestimoPorIdUsuario(2L);
+        List<Emprestimo> porLivro = emprestimoDAO.verEmprestimoPorIdLivro(1L);
+
+
+        emprestimoDAO.deletarId(2L);
+//        for (Emprestimo emprestimo : todosEmprestimos){
+//            System.out.println("Todos os emprestimos: " + emprestimo);
+//        }
+//        for (Emprestimo emprestimo : porUsuario){
+//            System.out.println("Emprestimo por usuario: " + emprestimo);
+//        }
+        for (Emprestimo emprestimo : porLivro){
+            System.out.println("Emprestimo por livro: " + emprestimo);
         }
     }
 
