@@ -9,7 +9,7 @@
 
         <class>br.com.valadares.biblioteca.modelos.Livro</class>
         <class>br.com.valadares.biblioteca.modelos.Usuario</class>
-        <class>br.com.valadares.biblioteca.modelos.Emprestimos</class>
+        <class>br.com.valadares.biblioteca.modelos.Emprestimo</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

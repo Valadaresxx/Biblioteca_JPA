@@ -22,4 +22,7 @@ public class UsuarioDAO {
         String jpql = "SELECT p FROM Usuario p";
         return em.createQuery(jpql, Usuario.class).getResultList();
     }
+    public void deletar(Usuario usuario) {
+        em.remove(this.em.merge(usuario));
+    }
 }

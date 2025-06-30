@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 @Entity
 @Table(name = "emprestimos")
-public class Emprestimos {
+public class Emprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,13 +16,13 @@ public class Emprestimos {
     private Livro livro;
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
-    public Emprestimos() {
+    public Emprestimo() {
     }
 
-    public Emprestimos(LocalDate dataEmprestimo, LocalDate dataDevolucaoPrevista, LocalDate dataDevolucaoReal) {
+    public Emprestimo(LocalDate dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucaoPrevista = dataDevolucaoPrevista;
-        this.dataDevolucaoReal = dataDevolucaoReal;
+//        this.dataDevolucaoPrevista = this.dataEmprestimo + ;
+//        this.dataDevolucaoReal = dataDevolucaoReal;
     }
 
     public Long getId() {
