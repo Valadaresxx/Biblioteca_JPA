@@ -39,8 +39,9 @@ public class Main {
         usuarioDAO.cadastrar(usuario3);
 
         emprestimoDAO.cadastrar(livro1, usuario1);
-        emprestimoDAO.cadastrar(livro3, usuario2);
+//        emprestimoDAO.cadastrar(livro3, usuario2);
         emprestimoDAO.cadastrar(livro2, usuario3);
+
         List<Emprestimo> todosEmprestimos = emprestimoDAO.buscarTodos();
         List<Emprestimo> porUsuario = emprestimoDAO.verEmprestimoPorUsuario(2l);
 
@@ -52,6 +53,18 @@ public class Main {
         for (Emprestimo emprestimo : porUsuario){
             System.out.println("Emprestimo por usuario: " + emprestimo);
         }
+        List<Livro> livroTest = livroDAO.buscarPorNome("Holy bible");
+        livroTest.forEach(p -> System.out.println(p.getAutor()));
+        Livro livroId = livroDAO.buscarPorId(2l);
+        System.out.println(livroId);
+        List<Livro> todos = livroDAO.buscarTodos();
+        todos.remove(1);
+        System.out.println(todos);
+        List<Livro> nier = livroDAO.buscarPorAutor("nier");
+        System.out.println(nier);
+        List<Livro> livroSemEmprestimos = livroDAO.livroSemEmprestimos();
+        livroSemEmprestimos.forEach(livro -> System.out.println(livro.getTitulo()));
+
 
         em.close();
     }
