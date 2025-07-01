@@ -18,8 +18,8 @@ SELECT:
 - Buscar por nome (LIKE) (FEITO)
 - Buscar por autor (LIKE) (FEITO)
 - Buscar livros sem empréstimos (FEITO)
-- Buscar livros com estoque disponível
-- Buscar livros mais emprestados
+- Buscar livros com estoque disponível (FEITO)
+- Buscar livros mais emprestados | relatorio
 
 UPDATE:
 - Atualizar informações do livro (título, autor, estoque)

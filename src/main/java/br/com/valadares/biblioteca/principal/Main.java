@@ -84,7 +84,7 @@ public class Main {
         System.out.println(todos);
         List<Livro> nier = livroDAO.buscarPorAutor("nier");
         System.out.println(nier);
-        List<Livro> livroSemEmprestimos = livroDAO.livroSemEmprestimos();
+        List<Livro> livroSemEmprestimos = livroDAO.buscarLivroSemEmprestimos();
         livroSemEmprestimos.forEach(livro -> System.out.println(livro.getTitulo()));
     }
     public static void testeEmprestimo() {
