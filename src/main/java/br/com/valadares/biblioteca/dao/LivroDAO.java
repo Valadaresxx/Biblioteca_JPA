@@ -25,8 +25,11 @@ public class LivroDAO {
 
     public Livro buscarPorId(Long id) {
         try{
-            return em.find(Livro.class, id);
-
+            Livro livro = em.find(Livro.class, id);
+            if(livro == null){
+               throw new DAOexceptions("Livro com id " + id + "não encontrado!");
+            }
+            return livro;
         } catch (RuntimeException e) {
             throw new DAOexceptions("Erro na busca por ID do livro." + id, e);
         }

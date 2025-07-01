@@ -1,10 +1,12 @@
 package br.com.valadares.biblioteca.dao;
 
+import br.com.valadares.biblioteca.exceptions.DAOexceptions;
 import br.com.valadares.biblioteca.modelos.Emprestimo;
 import br.com.valadares.biblioteca.modelos.Livro;
 import br.com.valadares.biblioteca.modelos.Usuario;
 import jakarta.persistence.EntityManager;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,53 +18,93 @@ public class EmprestimoDAO {
     }
 
     public void cadastrar(Livro livro, Usuario usuario) {
-        if (livro.getEstoque() <= 0){
-            throw new RuntimeException("Livro indisponível para empréstimo. Estoque zerado!");
+        try{
+            if (livro.getEstoque() <= 0){
+                throw new RuntimeException("Livro indisponível para empréstimo. Estoque zerado!");
+            }
+            livro.setEstoque(livro.getEstoque() - 1);
+            em.merge(livro);
+            Emprestimo emprestimo = new Emprestimo(livro, usuario);
+            em.persist(emprestimo);
+
+        } catch (RuntimeException e) {
+            throw new DateTimeException("Erro ao cadastrar o emprestimo.", e);
         }
-        livro.setEstoque(livro.getEstoque() - 1);
-        em.merge(livro);
-        Emprestimo emprestimo = new Emprestimo(livro, usuario);
-        em.persist(emprestimo);
     }
 
 
     public List<Emprestimo> buscarTodos() {
-        String jpql = "SELECT p FROM Emprestimo p";
-        return em.createQuery(jpql, Emprestimo.class).getResultList();
+        try{
+            String jpql = "SELECT p FROM Emprestimo p";
+            return em.createQuery(jpql, Emprestimo.class).getResultList();
+
+        } catch (RuntimeException e) {
+            throw new DAOexceptions("Erro na busca de todos os emprestimos.",e);
+        }
     }
     public List<Emprestimo> buscarEmprestimoPorIdUsuario(Long idUsuario) {
-        String jpql = "SELECT p FROM Emprestimo p WHERE p.usuario.id = :id";
-        return em.createQuery(jpql, Emprestimo.class)
-                .setParameter("id", idUsuario)
-                .getResultList();
+        try{
+            String jpql = "SELECT p FROM Emprestimo p WHERE p.usuario.id = :id";
+            return em.createQuery(jpql, Emprestimo.class)
+                    .setParameter("id", idUsuario)
+                    .getResultList();
+
+        } catch (RuntimeException e) {
+            throw new DAOexceptions("Erro na busca do emprestimo pelo id: " + idUsuario, e);
+        }
     }
     public List<Emprestimo> buscarEmprestimoPorIdLivro(Long idLivro) {
-        String jpql = "SELECT p FROM Emprestimo p WHERE p.livro.id = :id";
-        return em.createQuery(jpql, Emprestimo.class)
-                .setParameter("id", idLivro)
-                .getResultList();
+        try{
+            String jpql = "SELECT p FROM Emprestimo p WHERE p.livro.id = :id";
+            return em.createQuery(jpql, Emprestimo.class)
+                    .setParameter("id", idLivro)
+                    .getResultList();
+
+        } catch (RuntimeException e) {
+            throw new DAOexceptions("Erro na busca do emprestimo por id do livro: " + idLivro, e);
+        }
     }
     public Emprestimo buscarPorId(Long id) {
-        return em.find(Emprestimo.class, id);
+        try{
+            return em.find(Emprestimo.class, id);
+
+        } catch (RuntimeException e) {
+            throw new DAOexceptions("Erro na busca de emprestimo pelo id: " + id, e);
+        }
     }
     public List<Emprestimo> buscarTodosNaoDevolvidos() {
-        String jpql = "SELECT p FROM Emprestimo p WHERE p.dataDevolucaoReal IS NULL ";
-        return em.createQuery(jpql, Emprestimo.class).getResultList();
+        try{
+            String jpql = "SELECT p FROM Emprestimo p WHERE p.dataDevolucaoReal IS NULL ";
+            return em.createQuery(jpql, Emprestimo.class).getResultList();
+
+        } catch (RuntimeException e) {
+            throw new DAOexceptions("Erro na busca dos emprestimos não finalizados.", e);
+        }
     }
     public List<Emprestimo> buscarAtrasados() {
-        String jpql = "SELECT p FROM Emprestimos p WHERE p.dataDevolucaoPrevista IS < :hoje";
-        return em.createQuery(jpql, Emprestimo.class)
-                .setParameter("hoje", LocalDate.now())
-                .getResultList();
+        try{
+            String jpql = "SELECT p FROM Emprestimos p WHERE p.dataDevolucaoPrevista IS < :hoje";
+            return em.createQuery(jpql, Emprestimo.class)
+                    .setParameter("hoje", LocalDate.now())
+                    .getResultList();
+
+        } catch (RuntimeException e) {
+            throw new DAOexceptions("Erro na busca dos emprestimos atrasados.", e);
+        }
     }
 
 
     public void registraDevolucao(Emprestimo emprestimo) {
-        emprestimo.setDataDevolucaoReal(LocalDate.now());
-        Livro livro = emprestimo.getLivro();
-        livro.setEstoque(livro.getEstoque() + 1);
-        em.merge(livro);
-        em.merge(emprestimo);
+        try{
+            emprestimo.setDataDevolucaoReal(LocalDate.now());
+            Livro livro = emprestimo.getLivro();
+            livro.setEstoque(livro.getEstoque() + 1);
+            em.merge(livro);
+            em.merge(emprestimo);
+
+        } catch (RuntimeException e) {
+            throw new DAOexceptions("Erro no registro de devolução do emprestimo. ", e);
+        }
     }
 
 
