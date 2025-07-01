@@ -6,7 +6,6 @@ import br.com.valadares.biblioteca.modelos.Livro;
 import br.com.valadares.biblioteca.modelos.Usuario;
 import jakarta.persistence.EntityManager;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class EmprestimoDAO {
             em.persist(emprestimo);
 
         } catch (RuntimeException e) {
-            throw new DateTimeException("Erro ao cadastrar o emprestimo.", e);
+            throw new DAOexceptions("Erro ao cadastrar o emprestimo.", e);
         }
     }
 
@@ -83,7 +82,7 @@ public class EmprestimoDAO {
     }
     public List<Emprestimo> buscarAtrasados() {
         try{
-            String jpql = "SELECT p FROM Emprestimos p WHERE p.dataDevolucaoPrevista IS < :hoje";
+            String jpql = "SELECT p FROM Emprestimo p WHERE p.dataDevolucaoPrevista < :hoje";
             return em.createQuery(jpql, Emprestimo.class)
                     .setParameter("hoje", LocalDate.now())
                     .getResultList();
@@ -109,11 +108,15 @@ public class EmprestimoDAO {
 
 
     public void deletar(Emprestimo emprestimo) {
-        Livro livro = emprestimo.getLivro();
-        livro.setEstoque(livro.getEstoque() + 1);
-        em.merge(livro);
+        try{
+            Livro livro = emprestimo.getLivro();
+            livro.setEstoque(livro.getEstoque() + 1);
+            em.merge(livro);
+            em.remove(em.merge(emprestimo));
 
-        em.remove(em.merge(emprestimo));
+        } catch (RuntimeException e) {
+            throw new DAOexceptions("Erro ao exclur emprestimo.", e);
+        }
     }
     public void deletarId(Long id) {
         Emprestimo emprestimo = em.find(Emprestimo.class, id);
@@ -128,5 +131,4 @@ public class EmprestimoDAO {
             System.out.println("Emprestimo não encontrado.");
         }
     }
-
 }

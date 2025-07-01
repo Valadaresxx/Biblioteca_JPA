@@ -2,6 +2,9 @@ package br.com.valadares.biblioteca.modelos;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -11,6 +14,9 @@ public class Usuario {
     private String nome;
     private String email;
     private String telefone;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Emprestimo> emprestimos = new ArrayList<>();
 
     public Usuario() {
     }
@@ -35,6 +41,26 @@ public class Usuario {
 
     public String getTelefone() {
         return telefone;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public List<Emprestimo> getEmprestimos() {
+        return emprestimos;
+    }
+
+    public void setEmprestimos(List<Emprestimo> emprestimos) {
+        this.emprestimos = emprestimos;
     }
 
     @Override
