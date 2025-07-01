@@ -89,8 +89,8 @@ public class Main {
     }
     public static void testeEmprestimo() {
         List<Emprestimo> todosEmprestimos = emprestimoDAO.buscarTodos();
-        List<Emprestimo> porUsuario = emprestimoDAO.verEmprestimoPorIdUsuario(2L);
-        List<Emprestimo> porLivro = emprestimoDAO.verEmprestimoPorIdLivro(1L);
+        List<Emprestimo> porUsuario = emprestimoDAO.buscarEmprestimoPorIdUsuario(2L);
+        List<Emprestimo> porLivro = emprestimoDAO.buscarEmprestimoPorIdLivro(1L);
 
 
         emprestimoDAO.deletarId(2L);

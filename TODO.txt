@@ -22,12 +22,12 @@ SELECT:
 - Buscar livros mais emprestados | relatorio
 
 UPDATE:
-- Atualizar informações do livro (título, autor, estoque)
-- Atualizar quantidade de estoque (diminuir ou aumentar)
+- Atualizar informações do livro (título, autor, estoque) (FEITO)
+- Atualizar quantidade de estoque (diminuir ou aumentar) (FEITO)
 
 DELETE:
-- Remover livro do sistema por ID
-- Remover todos os livros (em caso de reset)
+- Remover livro do sistema por ID (FEITO)
+- Remover todos os livros (em caso de reset) (FEITO)
 
 ====================
 👤 CRUD USUÁRIO
@@ -63,11 +63,11 @@ SELECT:
 - Buscar empréstimos por ID (FEITO)
 - Buscar empréstimos por ID do usuário (FEITO)
 - Buscar empréstimos por ID do livro (FEITO)
-- Listar empréstimos ativos (não devolvidos)
-- Listar empréstimos vencidos (data prevista anterior à data atual)
+- Listar empréstimos ativos (não devolvidos) (FEITO)
+- Listar empréstimos vencidos (data prevista anterior à data atual) (FEITO)
 
 UPDATE:
-- Marcar devolução e registrar data real
+- Marcar devolução e registrar data real (FEITO)
 - Atualizar status do empréstimo (ativo/concluído)
 - Atualizar livro e usuário vinculados (caso necessário)
 
