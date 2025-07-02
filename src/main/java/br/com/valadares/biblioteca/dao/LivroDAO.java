@@ -25,11 +25,7 @@ public class LivroDAO {
 
     public Livro buscarPorId(Long id) {
         try{
-            Livro livro = em.find(Livro.class, id);
-            if(livro == null){
-               throw new DAOexceptions("Livro com id " + id + "não encontrado!");
-            }
-            return livro;
+            return em.find(Livro.class, id);
         } catch (RuntimeException e) {
             throw new DAOexceptions("Erro na busca por ID do livro." + id, e);
         }
@@ -38,7 +34,6 @@ public class LivroDAO {
         try{
             String jpql = "SELECT l FROM Livro l";
             return em.createQuery(jpql, Livro.class).getResultList();
-
         } catch (RuntimeException e) {
             throw new DAOexceptions("Erro na busca dos livros.", e);
         }
