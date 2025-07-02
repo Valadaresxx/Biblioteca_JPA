@@ -1,8 +1,6 @@
 package br.com.valadares.biblioteca.service;
 
-import br.com.valadares.biblioteca.dao.EmprestimoDAO;
 import br.com.valadares.biblioteca.dao.LivroDAO;
-import br.com.valadares.biblioteca.dao.UsuarioDAO;
 import br.com.valadares.biblioteca.exceptions.DAOexceptions;
 import br.com.valadares.biblioteca.modelos.Livro;
 import jakarta.persistence.EntityManager;
@@ -51,5 +49,12 @@ public class LivroService {
         } else {
             throw new DAOexceptions("Livro não pode ser removido. Ele está associado a um empréstimo.");
         }
+    }
+    public void removeLivroId(Long id) {
+        Livro livro = livroDAO.buscarPorId(id);
+        if(livro == null){
+            throw new DAOexceptions("Livro com id " + id + "não encontrado");
+        }
+        livroDAO.remove(livro);
     }
 }
