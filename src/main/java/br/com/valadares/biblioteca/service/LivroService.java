@@ -32,12 +32,77 @@ public class LivroService {
         }
         livroDAO.cadastrar(livro);
     }
+
+
     public Livro buscarPorId(Long id) {
         Livro livro = livroDAO.buscarPorId(id);
         if(livro == null){
             throw new DAOexceptions("Livro com id " + id + "não encontrado!");
         }
         return livro;
+    }
+
+
+    public void atualizarEstoque(Livro livro, int novoEstoque) {
+        if(livro == null){
+            throw new DAOexceptions("Erro ao encontrar o livro!");
+        }
+        if(novoEstoque < 0){
+            throw new DAOexceptions("Não pode atualizar o estoque para valor negativo");
+        }
+        livroDAO.atualizarEstoque(livro, novoEstoque);
+    }
+    public void atualizarTitulo(Livro livro, String novoTitulo) {
+        if(livro == null){
+            throw new DAOexceptions("Erro ao encontrar o livro!");
+        }
+        if(novoTitulo.trim().isEmpty()){
+            throw new DAOexceptions("Erro! Novo titulo vazio.");
+        }
+        livroDAO.atualizarTitulo(livro, novoTitulo);
+    }
+    public void atualizarAutor(Livro livro, String novoAutor) {
+        if(livro == null){
+            throw new DAOexceptions("Erro ao encontrar o livro!");
+        }
+        if(novoAutor.trim().isEmpty()){
+            throw new DAOexceptions("Erro! Novo autor vazio.");
+        }
+        livroDAO.atualizarAutor(livro, novoAutor);
+    }
+    public void atualizarIsbn(Livro livro, String novoIsbn) {
+        if(livro == null){
+            throw new DAOexceptions("Erro ao encontrar o livro!");
+        }
+        if(novoIsbn.trim().isEmpty()){
+            throw new DAOexceptions("Erro! Novo autor vazio.");
+        }
+        livroDAO.atualizarIsbn(livro, novoIsbn);
+    }
+    public void atualizarInformacoesCompletas(Livro livro, String novoTitulo,
+                                              String novoAutor, String novoIsbn, int novoEstoque) {
+        if(livro == null){
+            throw new DAOexceptions("Erro ao encontrar o livro!");
+        }
+        if(novoTitulo.trim().isEmpty()){
+            throw new DAOexceptions("Erro! Novo titulo vazio.");
+        }
+        if(novoEstoque < 0){
+            throw new DAOexceptions("Não pode atualizar o estoque para valor negativo");
+        }
+        if(novoAutor.trim().isEmpty()){
+            throw new DAOexceptions("Erro! Novo autor vazio.");
+        }
+        livroDAO.atualizarInformacoesCompletas(livro, novoTitulo, novoAutor, novoIsbn, novoEstoque);
+    }
+
+
+    public void removeLivroId(Long id) {
+        Livro livro = livroDAO.buscarPorId(id);
+        if(livro == null){
+            throw new DAOexceptions("Livro com id " + id + "não encontrado");
+        }
+        livroDAO.remove(livro);
     }
     public void removeLivro(Livro livro) {
         List<Livro> livroSemEmprestimos = livroDAO.buscarLivroSemEmprestimos();
@@ -50,11 +115,5 @@ public class LivroService {
             throw new DAOexceptions("Livro não pode ser removido. Ele está associado a um empréstimo.");
         }
     }
-    public void removeLivroId(Long id) {
-        Livro livro = livroDAO.buscarPorId(id);
-        if(livro == null){
-            throw new DAOexceptions("Livro com id " + id + "não encontrado");
-        }
-        livroDAO.remove(livro);
-    }
+
 }

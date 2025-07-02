@@ -98,6 +98,15 @@ public class LivroDAO {
             throw new DAOexceptions("Erro na atualização do Autor: " + livro.getAutor(), e);
         }
     }
+    public void atualizarIsbn(Livro livro, String novoIsbn) {
+        try{
+            livro = em.merge(livro);
+            livro.setIsbn(novoIsbn);
+
+        } catch (RuntimeException e) {
+            throw new DAOexceptions("Erro na atualiação do Isbn: " + livro.getIsbn(), e);
+        }
+    }
     public void atualizarEstoque(Livro livro, int novoEstoque) {
         try{
             livro = em.merge(livro);
