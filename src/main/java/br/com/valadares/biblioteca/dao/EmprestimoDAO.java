@@ -18,14 +18,10 @@ public class EmprestimoDAO {
 
     public void cadastrar(Livro livro, Usuario usuario) {
         try{
-            if (livro.getEstoque() <= 0){
-                throw new RuntimeException("Livro indisponível para empréstimo. Estoque zerado!");
-            }
             livro.setEstoque(livro.getEstoque() - 1);
             em.merge(livro);
             Emprestimo emprestimo = new Emprestimo(livro, usuario);
             em.persist(emprestimo);
-
         } catch (RuntimeException e) {
             throw new DAOexceptions("Erro ao cadastrar o emprestimo.", e);
         }
@@ -36,7 +32,6 @@ public class EmprestimoDAO {
         try{
             String jpql = "SELECT p FROM Emprestimo p";
             return em.createQuery(jpql, Emprestimo.class).getResultList();
-
         } catch (RuntimeException e) {
             throw new DAOexceptions("Erro na busca de todos os emprestimos.",e);
         }
