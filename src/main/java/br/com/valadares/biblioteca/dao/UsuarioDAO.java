@@ -17,7 +17,6 @@ public class UsuarioDAO {
     public void cadastrar(Usuario usuario) {
         try{
             em.persist(usuario);
-
         } catch (RuntimeException e) {
             throw new DAOexceptions("Erro ao cadastrar.", e);
         }
